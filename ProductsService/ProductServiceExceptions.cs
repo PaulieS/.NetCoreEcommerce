@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 namespace ProductsService
 {
 
-    public class ProductNotFoundException : Exception
+    public class ProductServiceException : Exception
+    {
+        public ProductServiceException() { }
+        public ProductServiceException(string message) : base(message) { }
+        public ProductServiceException(string message, Exception inner) : base(message, inner) { }
+    }
+    public class ProductNotFoundException : ProductServiceException
     {
         public ProductNotFoundException() { }
         public ProductNotFoundException(string message) : base(message) { }
@@ -14,8 +20,7 @@ namespace ProductsService
       
     }
 
-
-    public class ProductsServiceNotInitialisedException : Exception
+    public class ProductsServiceNotInitialisedException : ProductServiceException
     {
         public ProductsServiceNotInitialisedException() { }
         public ProductsServiceNotInitialisedException(string message) : base(message) { }

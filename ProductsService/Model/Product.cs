@@ -17,5 +17,7 @@ namespace ProductsService.Model
 
         public decimal GrossPrice { get; set; }
 
+        public decimal Stock { get; set; }
+
     }
 }

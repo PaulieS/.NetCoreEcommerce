@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProductsService.Model
 {
-    public class ProductsContext : DbContext
+    public class ProductsContext : BaseProductsContext
     {
-        public DbSet<Product> Products { get; set; }
         private string connectionString { get; set;  }
         public ProductsContext(string connectionString)
         {

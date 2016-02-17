@@ -27,7 +27,8 @@ namespace ProductsService.Model
                                 In volutpat arcu non eros fringilla, nec semper mi condimentum. 
                                 Praesent metus lectus, ultricies ut massa ac, aliquet aliquam justo.",
                     GrossPrice = 10M,
-                    NetPrice = 7.23M
+                    NetPrice = 7.23M,
+                    Stock = 100M
                 });
             }
             return products;
