@@ -27,4 +27,11 @@ namespace ProductsService
         public ProductsServiceNotInitialisedException(string message, Exception inner) : base(message, inner) { }
  
     }
+    public class ProductCantHaveNegativeStockException : ProductServiceException
+    {
+        public ProductCantHaveNegativeStockException() { }
+        public ProductCantHaveNegativeStockException(string message) : base(message) { }
+        public ProductCantHaveNegativeStockException(string message, Exception inner) : base(message, inner) { }
+
+    }
 }
