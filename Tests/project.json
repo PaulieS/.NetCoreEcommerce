@@ -19,6 +19,7 @@
   "dependencies": {
     "eCommerce": "1.0.0-*",
     "EntityFramework.InMemory": "7.0.0-rc1-final",
+    "PhotoProvider": "1.0.0-*",
     "ProductsService": "1.0.0-*"
   }
 }

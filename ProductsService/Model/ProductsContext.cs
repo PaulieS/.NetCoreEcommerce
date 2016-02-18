@@ -13,6 +13,7 @@ namespace ProductsService.Model
         {
             this.connectionString = connectionString;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(new Npgsql.NpgsqlConnection(connectionString));

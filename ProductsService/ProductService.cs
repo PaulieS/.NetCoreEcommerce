@@ -11,9 +11,9 @@ using Microsoft.Data.Entity.ChangeTracking;
 [assembly: InternalsVisibleTo("Tests")]
 namespace ProductsService
 {
-    public class ProductService : IDisposable 
+    public sealed  class ProductService : IDisposable 
     {
-        public string ConnectionString { get; set; }
+        private string ConnectionString { get; set; }
 
         private BaseProductsContext Db { get; set; }
 
@@ -83,7 +83,7 @@ namespace ProductsService
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
