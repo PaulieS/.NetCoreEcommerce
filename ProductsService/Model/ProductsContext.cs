@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace ProductsService.Model
 {
-    public class ProductsContext : BaseProductsContext
+    public class ProductsContext : DbContext
     {
-        private string connectionString { get; set;  }
-        public ProductsContext(string connectionString)
+        public DbSet<Product> Products { get; set; }
+
+        public ProductsContext(DbContextOptions options): base(options)
         {
-            this.connectionString = connectionString;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ProductsContext( )
         {
-            optionsBuilder.UseNpgsql(new Npgsql.NpgsqlConnection(connectionString));
         }
+
     }
 }

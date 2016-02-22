@@ -1,22 +1,21 @@
 using Microsoft.Data.Entity;
 using System;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace PhotoProvider
 {
-    internal class PhotoProviderContext : DbContext, IPhotoProviderContext
+    public class PhotoProviderContext : DbContext, IPhotoProviderContext
     {
         public DbSet<Photo> Photos { get; set; }
        
         public DbSet<ProviderClient> Clients { get; set; }
-        private string connectionString { get; set; }
 
-        public PhotoProviderContext(string connectionString)
+        public PhotoProviderContext(DbContextOptions options)
         {
-            this.connectionString = connectionString;
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public PhotoProviderContext()
         {
-            optionsBuilder.UseNpgsql(new Npgsql.NpgsqlConnection(connectionString));
         }
     }
 }

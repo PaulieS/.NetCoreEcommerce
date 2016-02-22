@@ -13,7 +13,7 @@ namespace Tests
         public void InitialisePhotoProvider()
         {
             string connectionString =
-                "Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=sexpistols1";
+                "Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=password";
             PhotoProvider.PhotoProvider provider = new PhotoProvider.PhotoProvider(connectionString);
             Task.Run(async ()=>
             {

@@ -13,16 +13,16 @@ namespace ProductsService
 {
     public sealed  class ProductService : IDisposable 
     {
-        private string ConnectionString { get; set; }
+        private ProductsContext Db { get; set; }
 
-        private BaseProductsContext Db { get; set; }
-
-        public ProductService(string connectionsString):this(new ProductsContext(connectionsString))
+        public ProductService(string connectionsString)
         {
-            ConnectionString = connectionsString;
+           var optionsBuilder = new DbContextOptionsBuilder();
+            optionsBuilder.UseNpgsql(connectionsString);
+            Db = new ProductsContext(optionsBuilder.Options);
         }
 
-        internal ProductService(BaseProductsContext db)
+        internal ProductService(ProductsContext db)
         {
             this.Db = db;
         }

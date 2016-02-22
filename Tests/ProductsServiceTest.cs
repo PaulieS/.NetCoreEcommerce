@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Entity;
 using ProductsService;
 using Xunit;
 
@@ -11,12 +12,20 @@ namespace Tests
     
     public class ProductsServiceTest
     {
+        private ProductsContext GetRealDbProductContext()
+        {
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
+            builder.UseNpgsql("Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=password");
+            ProductsContext context =
+                 new ProductsContext(builder.Options);
+            return context;
+        }
+
 
         public ProductService InitialiseProductsServiceWithSampleData()
         {
-            BaseProductsContext context =
-                new ProductsContext(
-                    "Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=sexpistols1");
+            var context = GetRealDbProductContext();
+
             context.Database.EnsureDeleted();
             context.SaveChanges();
 
@@ -26,9 +35,7 @@ namespace Tests
                 await ps.InitialiseWithSeedData();
             }).GetAwaiter().GetResult();
             ps.Dispose();
-            context =
-                new ProductsContext(
-                    "Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=sexpistols1");
+            context = GetRealDbProductContext();
             ps = new ProductsService.ProductService(context);
             return ps;
 
@@ -36,7 +43,9 @@ namespace Tests
         [Fact]
         public void SimpleDatabaseInitialisation()
         {
-            BaseProductsContext context = new MockedBaseProductsContext();
+            var context = GetRealDbProductContext();
+            context.Database.EnsureDeleted();
+            context.SaveChanges();
 
             ProductsService.ProductService ps = new ProductsService.ProductService(context);
             Task.Run(async () =>
@@ -113,7 +122,7 @@ namespace Tests
                 using (var ps = InitialiseProductsServiceWithSampleData())
                 {
                     Assert.Throws<ProductCantHaveNegativeStockException>(
-                        () => Task.Run(async () => await ps.GetProduct(-1)).GetAwaiter().GetResult());
+                        () => Task.Run(async () => await ps.SubstractFromProductStock(1,1000) ).GetAwaiter().GetResult());
                 }
             }
         }
