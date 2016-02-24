@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
 
-namespace PhotoProvider.Migrations
+namespace DefaultPhotoProvider.Migrations
 {
     public partial class Init : Migration
     {

@@ -15,7 +15,7 @@ namespace Tests
         private ProductsContext GetRealDbProductContext()
         {
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseNpgsql("Host=192.168.1.104; Database=ECommerceTest; Username=postgres; Password=password");
+            builder.UseNpgsql("Host=192.168.1.103; Database=ECommerceTest; Username=postgres; Password=password");
             ProductsContext context =
                  new ProductsContext(builder.Options);
             return context;
@@ -54,7 +54,7 @@ namespace Tests
             }).GetAwaiter().GetResult();
             var products = Task.Run(async () =>
             {
-                return await ps.GetProducts(10, 0);
+                return await ps.GetProducts();
             }).GetAwaiter().GetResult();
             Assert.True(products.Count()== 0);
         }
@@ -64,7 +64,7 @@ namespace Tests
         {
             using (var ps = InitialiseProductsServiceWithSampleData())
             {
-                var products = Task.Run(async () => await ps.GetProducts(10, 0)).GetAwaiter().GetResult();
+                var products = Task.Run(async () => await ps.GetProducts()).GetAwaiter().GetResult();
                 Assert.True(products.Count() > 0);
             }
         }
@@ -118,12 +118,13 @@ namespace Tests
         }
         [Fact]
         public void SubstractFromExistingProductStockWhereSubstractedValueIsHigherThanStock()
+        {
+            using (var ps = InitialiseProductsServiceWithSampleData())
             {
-                using (var ps = InitialiseProductsServiceWithSampleData())
-                {
-                    Assert.Throws<ProductCantHaveNegativeStockException>(
-                        () => Task.Run(async () => await ps.SubstractFromProductStock(1,1000) ).GetAwaiter().GetResult());
-                }
+                Assert.Throws<ProductCantHaveNegativeStockException>(
+                    () => Task.Run(async () => await ps.SubstractFromProductStock(1,1000) ).GetAwaiter().GetResult());
             }
         }
+      
+    }
 }

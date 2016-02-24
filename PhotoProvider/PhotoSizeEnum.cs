@@ -1,4 +1,4 @@
-﻿namespace PhotoProvider
+﻿namespace DefaultPhotoProvider
 {
     public enum PhotoSizeEnum
     {

@@ -21,5 +21,8 @@
     "EntityFramework.InMemory": "7.0.0-rc1-final",
     "PhotoProvider": "1.0.0-*",
     "ProductsService": "1.0.0-*"
-  }
+  },
+  "resources": [
+    "resources/img1.png"
+  ]
 }

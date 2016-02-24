@@ -29,11 +29,13 @@ namespace ProductsService
         public async Task Initialise()
         {
             await Db.Database.EnsureCreatedAsync();
+            await Db.Database.MigrateAsync();
         }
         public async Task InitialiseWithSeedData()
         {
-                await Db.Database.EnsureCreatedAsync();
-                var seedData = SeedData.GetSampleProducts();
+            await Initialise();
+
+            var seedData = SeedData.GetSampleProducts();
                 Db.AddRange(seedData);
                 seedData = null;
                 await Db.SaveChangesAsync();
@@ -51,10 +53,10 @@ namespace ProductsService
             else
                 throw new ProductsServiceNotInitialisedException();
         }
-        public async Task<IEnumerable<Product>> GetProducts(int take, int skip)
+        public async Task<IQueryable<Product>> GetProducts()
         {
             if (Db != null)
-                return await Db.Products.AsNoTracking().Take(take).Skip(skip).ToListAsync();
+                return Db.Products.AsNoTracking();
             else
                 throw new ProductsServiceNotInitialisedException();
         }
@@ -114,16 +116,6 @@ namespace ProductsService
             // GC.SuppressFinalize(this);
         }
         #endregion
-        //public async Task<List<Product>> GetProducts(int take, int skip, Func<Product, Key> orderBy)
-        //{
-        //    if (db != null)
-        //    {
-        //        return await db.Products.Take(take).Skip(skip).OrderBy(Prod.ToListAsync();
-        //    }
-        //    else
-        //    {
-        //        throw new ProductsServiceNotInitialisedException();
-        //    }
-        //}
+  
     }
 }

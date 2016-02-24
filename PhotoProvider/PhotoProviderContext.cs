@@ -2,7 +2,7 @@ using Microsoft.Data.Entity;
 using System;
 using Microsoft.Data.Entity.Infrastructure;
 
-namespace PhotoProvider
+namespace DefaultPhotoProvider
 {
     public class PhotoProviderContext : DbContext, IPhotoProviderContext
     {
@@ -10,7 +10,7 @@ namespace PhotoProvider
        
         public DbSet<ProviderClient> Clients { get; set; }
 
-        public PhotoProviderContext(DbContextOptions options)
+        public PhotoProviderContext(DbContextOptions options):base(options)
         {
         }
 

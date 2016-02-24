@@ -1,6 +1,6 @@
 using Microsoft.Data.Entity;
 
-namespace PhotoProvider
+namespace DefaultPhotoProvider
 {
     internal interface IPhotoProviderContext
     {

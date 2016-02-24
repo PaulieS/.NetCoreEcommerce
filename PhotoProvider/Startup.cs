@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Data.Entity;
 
-namespace PhotoProvider
+namespace DefaultPhotoProvider
 {
     public class Startup
     {
