@@ -28,7 +28,6 @@ namespace ProductsService
         }
         public async Task Initialise()
         {
-            await Db.Database.EnsureCreatedAsync();
             await Db.Database.MigrateAsync();
         }
         public async Task InitialiseWithSeedData()

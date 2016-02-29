@@ -14,7 +14,7 @@ namespace DefaultPhotoProvider
 
         public int ObjectId { get; set; }
 
-        private ICollection<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
     }
 }

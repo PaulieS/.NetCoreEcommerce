@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +32,6 @@ namespace DefaultPhotoProvider
         }
         public async Task Initialise()
         {
-            await Db.Database.EnsureCreatedAsync();
             await Db.Database.MigrateAsync();
         }
 
@@ -63,11 +63,7 @@ namespace DefaultPhotoProvider
         }
         public async Task<int> AddPhoto<T>(byte[] file, T owner, Func<T, int> ownerId, string extension)
         {
-            var client = await GetClient(owner, ownerId);
-            if (client == null)
-            {
-                client = await CreateNewClient(owner, ownerId);
-            }
+            var client = await GetClient(owner, ownerId) ?? await CreateNewClient(owner, ownerId);
             var photoEntity = await AddPhotoToClient(client);
             await SavePhotoFile(photoEntity, file, extension);
             return photoEntity.Id;
@@ -87,14 +83,25 @@ namespace DefaultPhotoProvider
             {
                 await fileStream.WriteAsync(file, 0, file.Length);
             }
+            photo.Path = fileUri;
+            await Db.SaveChangesAsync();
         }
         private async Task<Photo> AddPhotoToClient(ProviderClient client)
         {
-            Photo photo = new Photo();
-            photo.ClientId = client.Id;
+            Photo photo = new Photo {ClientId = client.Id};
             Db.Photos.Add(photo);
             await Db.SaveChangesAsync();
             return photo;
+        }
+
+        public async Task<IEnumerable<Photo>> GetPhotos<T>(T client, Func<T, int> clientId)
+        {
+            var clientHashCode = await GetClientHash(client, clientId);
+            var clientEntity = Db.Clients.FirstOrDefault(x => x.ObjectTypeHash == clientHashCode && x.ObjectId == clientId(client));
+            if(clientEntity==null) return Enumerable.Empty<Photo>();
+
+            return clientEntity.Photos?? Enumerable.Empty<Photo>();
+
         }
     }
 }

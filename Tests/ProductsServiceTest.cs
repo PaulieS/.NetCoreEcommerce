@@ -21,6 +21,14 @@ namespace Tests
             return context;
         }
 
+        private ProductsContext GetInMemoryProductsContext()
+        {
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
+            builder.UseInMemoryDatabase();
+            ProductsContext context =
+                     new ProductsContext(builder.Options);
+            return context;
+        }
 
         public ProductService InitialiseProductsServiceWithSampleData()
         {

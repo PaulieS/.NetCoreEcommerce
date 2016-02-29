@@ -29,7 +29,6 @@ namespace DefaultPhotoProvider.Migrations
                         .Annotation("Npgsql:Serial", true),
                     ClientId = table.Column<int>(nullable: false),
                     Path = table.Column<string>(nullable: true),
-                    Size = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

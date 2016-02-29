@@ -9,6 +9,8 @@ namespace DefaultPhotoProvider
         [ForeignKey("Client")]
         public int ClientId { get; set; }
 
+        public string Path { get; set; }
+
         public virtual ProviderClient Client{ get; set; }
     }
 }
