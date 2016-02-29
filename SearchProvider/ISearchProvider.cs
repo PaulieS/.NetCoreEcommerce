@@ -10,3 +10,4 @@ namespace SearchProvider
             params Func<T, string>[] searchedFileds);
 
     }
+}
